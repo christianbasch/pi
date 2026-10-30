@@ -352,6 +352,8 @@ export interface ExtensionContext {
 	thinkingLevel?: ThinkingLevel;
 	/** Whether the agent is idle (not streaming) */
 	isIdle(): boolean;
+	/** Current blocking extension UI prompt, or undefined when none is open. Returns a snapshot. */
+	getUIPrompt(): Readonly<{ kind: UIPromptKind; title?: string }> | undefined;
 	/** Whether project-local trust is active for this context. */
 	isProjectTrusted(): boolean;
 	/** The current abort signal, or undefined when the agent is not streaming. */

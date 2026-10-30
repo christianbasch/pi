@@ -1242,6 +1242,14 @@ pi.on("tool_result", async (event, ctx) => {
 
 Control flow helpers. `ctx.isIdle()` is false while Pi is processing an agent run, automatic retry, auto-compaction retry, or queued continuation.
 
+### ctx.getUIPrompt()
+
+Returns a snapshot of Pi's current blocking extension UI prompt as `{ kind, title? }`, or `undefined` when none is open. The kinds are `select`, `confirm`, `input`, `editor`, and `custom`. Nested or overlapping prompts share the outer waiting span, matching `ui_prompt_start` / `ui_prompt_end`.
+
+Status integrations can query this together with `ctx.isIdle()` when connecting, and query again when lifecycle events arrive. They do not need to reconstruct dialog state from events or session messages. The snapshot cannot mutate Pi's state. Like other context methods, calls on a context invalidated by reload or session replacement throw; query the new context after startup. TUI reload dismisses the old extension UI before starting the new runtime.
+
+This reports extension UI prompts, not the ordinary input editor, conversational questions, subprocess stdin, or startup trust prompts before the session runtime exists.
+
 ### ctx.shutdown()
 
 Request a graceful shutdown of pi.

@@ -926,6 +926,10 @@ export class ExtensionRunner {
 				runner.assertActive();
 				return runner.isIdleFn();
 			},
+			getUIPrompt: () => {
+				runner.assertActive();
+				return runner.activeUIPrompt ? { ...runner.activeUIPrompt } : undefined;
+			},
 			isProjectTrusted: () => {
 				runner.assertActive();
 				return runner.isProjectTrustedFn();
